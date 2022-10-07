@@ -14,17 +14,17 @@ module.exports = async function (context, req) {
     const user = req.body || {};
     const roles = [];
     
-    //for (const [role, groupeId] of Object.entries(roleGroupMappings)) {
-    //    if (await isUserInGroup(groupId, user.accessToken)) {
-    //        roles.push(role);
-    //    }
-    //}
+    for (const [role, groupeId] of Object.entries(roleGroupMappings)) {
+        if (await isUserInGroup(groupId, user.accessToken)) {
+            roles.push(role);
+        }
+    }
     
-    //for (const [role, roleId] of Object.entries(appRolesMappings)) {
-    //    if (await isUserInRole(roleId, user.accessToken)) {
-    //        roles.push(role);
-    //    }
-    //}
+    for (const [role, roleId] of Object.entries(appRolesMappings)) {
+        if (await isUserInRole(roleId, user.accessToken)) {
+            roles.push(role);
+        }
+    }
     
     roles.push("admin");
 
