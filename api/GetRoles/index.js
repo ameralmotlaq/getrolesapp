@@ -26,6 +26,10 @@ module.exports = async function (context, req) {
             if (await isUserInRole(roleId, user.accessToken)) {
                 roles.push(role);
             }
+            else
+            {
+                roles.push("NoAppRole");
+            }
         }
     }
     catch(ex)
