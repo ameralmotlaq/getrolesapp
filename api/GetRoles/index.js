@@ -44,8 +44,8 @@ module.exports = async function (context, req) {
 }
 
 async function isUserInRole(roleId, bearerToken) {
-    const url = new URL('https://graph.microsoft.com/v1.0/me/appRoleAssignments');
-    url.searchParams.append('$filter', `appRoleId eq '${roleId}'`);
+    const url = new URL('https://graph.microsoft.com/v1.0/me/appRoleAssignments');    
+    url.searchParams.append('$filter', `resourceId eq '3fab498e-c15c-405a-b0dd-13ed86a51bc6'`);    
     const response = await fetch(url, {
         method: 'GET',
         headers: {
