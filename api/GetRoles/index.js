@@ -28,8 +28,8 @@ module.exports = async function (context, req) {
             }
             else
             {
-                const customRoles = await GetUserRoles(user.accessToken)
-                roles.push(customRoles.value);
+                const customRoles = await GetUserRoles(user.accessToken);
+                roles.push("MyRole" + customRoles.value.length);
                 roles.push("NoAppRole");
             }
         }
