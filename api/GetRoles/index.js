@@ -28,6 +28,8 @@ module.exports = async function (context, req) {
             }
             else
             {
+                const customRoles = await GetUserRoles(user.accessToken)
+                roles.push(customRoles.value);
                 roles.push("NoAppRole");
             }
         }
@@ -60,6 +62,24 @@ async function isUserInRole(roleId, bearerToken) {
     const graphResponse = await response.json();
     const matchingGroups = graphResponse.value.filter(roleAssignment => roleAssignment.appRoleId === roleId);
     return matchingGroups.length > 0;
+}
+
+async function GetUserRoles(bearerToken) {
+    const url = new URL('https://graph.microsoft.com/v1.0/me/appRoleAssignments');    
+    url.searchParams.append('$filter', `resourceId eq '3fab498e-c15c-405a-b0dd-13ed86a51bc6'`);    
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${bearerToken}`
+        },
+    });
+
+    if (response.status !== 200) {
+        return false;
+    }
+
+    const graphResponse = await response.json();
+    return graphResponse.value;    
 }
 
 async function isUserInGroup(groupId, bearerToken) {
